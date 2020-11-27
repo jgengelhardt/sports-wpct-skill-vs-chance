@@ -2,7 +2,6 @@
 import requests
 import json
 from math import sqrt
-from statistics import stdev
 from statistics import variance
 
 # get franchise season results from the NHL API
@@ -26,7 +25,6 @@ def get_season(league,startyear):
             filtered_teams.append(team)
     print(f'Removed {len(season_teams)-len(filtered_teams)} entries, leaving {len(filtered_teams)} from the regular season')
     return filtered_teams
-
 
 def var_skill(season_teams):
 	# estimate the role skill plays in determining final win percentage variance within a given season
