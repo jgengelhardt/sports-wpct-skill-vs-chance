@@ -8,7 +8,7 @@ def get_season_var_NFL(year):
     try:     # check if the URL exists; else print('No season played')
         year_html = urlopen(f'https://www.pro-football-reference.com/years/{year}/')
     except HTTPError as e:
-        return 'Error: URL invalid'
+        return 'Error'
     year_bs = BeautifulSoup(year_html, 'html.parser')
     season_tables = year_bs.findAll('table')
     # pull all win percentages into a list
@@ -20,7 +20,7 @@ def get_season_var_NFL(year):
         try:
             win_pct.append(float(score.get_text()))
         except:
-            return 'Error: No win percentages'
+            return 'Error'
     # find variance attributable to chance
     flips = []
     for table in season_tables:
@@ -35,7 +35,7 @@ def get_season_var_NFL(year):
     if var_diff > 0:
         return round(sqrt(var_diff),3) #return standard deviation, not variance, for readability
     else:
-        return 'Error: variance negative'
+        return 'Error'
 
 def NFL_skill_history(start,stop):
     history = []
