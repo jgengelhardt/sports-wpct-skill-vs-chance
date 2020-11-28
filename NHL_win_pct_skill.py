@@ -8,7 +8,7 @@ from statistics import variance
 league_request = requests.get('https://records.nhl.com/site/api/franchise-season-results')
 league_json = league_request.json()
 NHL_alltime = league_json['data']
-print('Loaded NHL franchise season results')
+print('Loaded NHL franchise season results from API')
 
 def get_season(league,startyear):
     # get franchise records from a given season
@@ -17,17 +17,15 @@ def get_season(league,startyear):
     for element in league:
         if element['seasonId'] == yearid:
             season_teams.append(element)
-    print(f'Found {len(season_teams)} entries with seasonId {yearid}')
     # only include regular season games
     filtered_teams = []
     for team in season_teams:
         if team['gamesPlayed'] == season_teams[0]['gamesPlayed']:
             filtered_teams.append(team)
-    print(f'Removed {len(season_teams)-len(filtered_teams)} entries, leaving {len(filtered_teams)} from the regular season')
     return filtered_teams
 
 def var_skill(season_teams):
-	# estimate the role skill plays in determining final win percentage variance within a given season
+    # estimate the role skill plays in determining final win percentage variance within a given season
     if len(season_teams) >= 2:
         season_wpercentages = []
         for team in season_teams: # find the variance of win/loss records in a league
@@ -39,15 +37,15 @@ def var_skill(season_teams):
         else:
             return 'Error'
     else:
-        print('Not enough season participation')
+        return 'Error'
 
 def skill_history(start, stop):
-    output = {'year': 'skill stdev'}
+    output = []
     for i in range(start,stop+1):
-        output[i] = var_skill(get_season(NHL_alltime,i))
+        score = [i,var_skill(get_season(NHL_alltime,i))]
+        if 'Error'  not in score:
+            output += [score]
     return output
 
-# ask the user what they want to see
-first_year = input('What year do you want to start with?'
-last_year = input('What recent year do you want to end on?')
-print skill_history(first_year, last_year)
+NHL_history = skill_history(1917,2021)
+print(NHL_history)

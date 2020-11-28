@@ -8,7 +8,7 @@ def get_season_var_NBA(year):
     try:     # check if the URL exists; else print('No season played')
         year_html = urlopen(f'https://www.basketball-reference.com/leagues/NBA_{year}.html')
     except HTTPError as e:
-        return 'No season played'
+        return 'Error'
     year_bs = BeautifulSoup(year_html, 'html.parser')
     season_tables = year_bs.findAll('table')
     # pull all win percentages into a list
@@ -20,7 +20,7 @@ def get_season_var_NBA(year):
         try:
             win_pct.append(float(score.get_text()))
         except:
-            pass
+            return 'Error'
     # find variance attributable to chance
     flips = []
     for table in season_tables:
@@ -34,7 +34,12 @@ def get_season_var_NBA(year):
     else:
         return 'Error'
 
-NBA_history = {}
-for season in range(1950,2021):
-    NBA_history[season] = get_season_var_NBA(season)
-print(NBA_history)
+def NBA_skill_history(start,stop):
+    history = []
+    for season in range(start,stop+1):
+        score = [season, get_season_var_NBA(season)]
+        if 'Error'  not in score:
+            history += [score]
+    return history
+
+NBA_history = NBA_skill_history(1940,2022)
