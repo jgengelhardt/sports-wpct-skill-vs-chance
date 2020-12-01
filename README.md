@@ -16,6 +16,8 @@ The key equation is ````var(x+y) = var(x) + var(y) + 2*Cov(x,y)```` as ````var(r
 ## Visualization
 With the season year on the horizontal axis and the number representing how well a season's final standings represent team skill on the vertical axis, it's possible to find a trend line for the role of skill in season standings over time for a given league. We can compare those trends at a glance to determine which league's standings have been more likely to represent team skill.
 
+![A scatterplot with trend lines for each league, showing MLB standings as least and WNBA standings as most attributable to skill.](wpct_plot.png)
+
 <!--
 ## Interpretation
 
