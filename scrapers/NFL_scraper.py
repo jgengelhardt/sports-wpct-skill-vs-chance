@@ -1,3 +1,5 @@
+import csv
+import os
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.error import HTTPError
@@ -37,13 +39,17 @@ def get_season_var_NFL(year):
     else:
         return 'Error'
 
-def NFL_skill_history(start,stop):
-    history = []
-    for season in range(start,stop+1):
-        score = [season, get_season_var_NFL(season)]
-        if 'Error'  not in score:
-            history += [score]
-    return history
+def get_NFL_history():
+    csvFile = open('./results/NFL_history.csv', 'w', newline='')
+    try:
+        writer = csv.writer(csvFile)
+        for i in range(1920,2020):
+            score = [i, get_season_var_NFL(i)]
+            if 'Error' not in score:
+                print (f'Loaded NFL season {i}', end="\r", flush=True)
+                writer.writerow(score)
+    finally:
+        csvFile.close()
+        print('\nNFL .csv written', flush=True)
 
-NFL_history = NFL_skill_history(1920,2022)
-print(NFL_history)
+get_NFL_history()

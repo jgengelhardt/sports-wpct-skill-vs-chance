@@ -1,3 +1,5 @@
+import csv
+import os
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.error import HTTPError
@@ -34,12 +36,17 @@ def get_season_var_NBA(year):
     else:
         return 'Error'
 
-def NBA_skill_history(start,stop):
-    history = []
-    for season in range(start,stop+1):
-        score = [season, get_season_var_NBA(season)]
-        if 'Error'  not in score:
-            history += [score]
-    return history
+def get_NBA_history():
+    csvFile = open('./results/NBA_history.csv', 'w', newline='')
+    try:
+        writer = csv.writer(csvFile)
+        for i in range(1940,2023):
+            score = [i, get_season_var_NBA(i)]
+            if 'Error' not in score:
+                print (f'Loaded NBA season {i}', end="\r", flush=True)
+                writer.writerow(score)
+    finally:
+        csvFile.close()
+        print('\nNBA .csv written', flush=True)
 
-NBA_history = NBA_skill_history(1940,2022)
+get_NBA_history()

@@ -1,3 +1,11 @@
+import csv
+import os
+from bs4 import BeautifulSoup, Comment
+from urllib.request import urlopen
+from urllib.error import HTTPError
+from statistics import variance
+from math import sqrt
+
 def get_season_var_WNBA(year):
     try:     # check if the URL exists; else print('No season played')
         year_html = urlopen(f'https://www.basketball-reference.com/wnba/years/{year}.html')
@@ -37,13 +45,17 @@ def get_season_var_WNBA(year):
     else:
         return 'Error'
 
-def WNBA_skill_history(start,stop):
-    history = []
-    for season in range(start,stop+1):
-        score = [season, get_season_var_WNBA(season)]
-        if 'Error'  not in score:
-            history += [score]
-    return history
+def get_WNBA_history():
+    csvFile = open('./results/WNBA_history.csv', 'w', newline='')
+    try:
+        writer = csv.writer(csvFile)
+        for i in range(1997,2021):
+            score = [i, get_season_var_WNBA(i)]
+            if 'Error' not in score:
+                print (f'Loaded WNBA season {i}', end="\r", flush=True)
+                writer.writerow(score)
+    finally:
+        csvFile.close()
+        print('\nWNBA .csv written', flush=True)
 
-WNBA_history = WNBA_skill_history(1997,2020)
-print(WNBA_history)
+get_WNBA_history()

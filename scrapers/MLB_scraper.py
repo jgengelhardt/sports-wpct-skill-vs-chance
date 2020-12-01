@@ -1,3 +1,5 @@
+import csv
+import os
 from bs4 import BeautifulSoup, Comment
 from urllib.request import urlopen
 from urllib.error import HTTPError
@@ -43,13 +45,17 @@ def get_season_var_MLB(year):
     else:
         return 'Error'
 
-def MLB_skill_history(start,stop):
-    history = []
-    for season in range(start,stop+1):
-        score = [season, get_season_var_MLB(season)]
-        if 'Error'  not in score:
-            history += [score]
-    return history
+def get_MLB_history():
+    csvFile = open('./results/MLB_history.csv', 'w', newline='')
+    try:
+        writer = csv.writer(csvFile)
+        for i in range(1900,2020):
+            score = [i, get_season_var_MLB(i)]
+            if 'Error' not in score:
+                print (f'Loaded MLB season {i}', end="\r", flush=True)
+                writer.writerow(score)
+    finally:
+        csvFile.close()
+        print('\nMLB .csv written', flush=True)
 
-MLB_history = MLB_skill_history(1901,2020)
-print(MLB_history)
+get_MLB_history()

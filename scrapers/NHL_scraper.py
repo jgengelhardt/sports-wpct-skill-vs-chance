@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import requests
 from math import sqrt
 from statistics import variance
@@ -35,7 +36,7 @@ def get_NHL_history():
     league_json = league_request.json()
     NHL_alltime = league_json['data']
     print('Loaded NHL franchise season results from API')
-    csvFile = open('NHL_history.csv', 'w', newline='')
+    csvFile = open('./results/NHL_history.csv', 'w', newline='')
     try:
         writer = csv.writer(csvFile)
         for i in range(1917,2022):
