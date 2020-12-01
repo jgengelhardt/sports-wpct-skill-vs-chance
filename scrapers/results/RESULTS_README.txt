@@ -1,1 +1,1 @@
-The scrapers write into this directory to keep things organized. However, the copyright for sports stats hosted on the websites scraped here is a little ambiguous, so I'm not going to share the tables here.
+The scripts write their results into this directory to keep things organized. However, the copyright for sports stats hosted on the websites scraped is a little ambiguous, so I'm not going to share the tables here.
