@@ -1,10 +1,17 @@
+import csv
+import os
+from bs4 import BeautifulSoup, Comment
+from urllib.request import urlopen
+from urllib.error import HTTPError
+from statistics import variance
+from math import sqrt
+
 def get_season_var_NCAABB(year):
     try:     # check if the URL exists; else print('No season played')
         year_html = urlopen(f'https://www.sports-reference.com/cbb/seasons/{year}.html')
     except HTTPError as e:
         return 'Error'
     year_bs = BeautifulSoup(year_html, 'html.parser')
-    year_comments = year_bs.find_all(text=lambda text:isinstance(text, Comment))
     season_tables = year_bs.findAll('table')
     if len(season_tables) == 0:
         return 'Error'
