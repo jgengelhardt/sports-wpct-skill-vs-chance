@@ -3,6 +3,7 @@ from matplotlib import pylab
 import numpy
 import pandas as pd
 
+fig= plt.figure(figsize=(8,6))
 
 # define datasets and labels
 leagues = ('NHL','NBA', 'NCAABB', 'NFL','MLB')
