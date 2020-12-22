@@ -24,6 +24,10 @@ With the season year on the horizontal axis and the number representing how well
 
 ![A scatterplot with trend lines for each league, showing baseball standings as least and basketball standings as most attributable to skill.](wpct_plot.png)
 
+And to take a look at whether increasing the number of games played makes a difference, or if differences between how each sport is played are more to blame: 
+
+![A scatterplot for all sports, with win percentage attributability to skill going down with an increase in games played.](wpct_games.png)
+
 ## Interpretation
 It's no suprise that MLB standings are least and WNBA/NBA standings are most attributable to skill. As Michael Mauboussin notes, nearly every player on an MLB team is required to bat, while in basketball, it's possible to tell four players to just pass to the team all-star when they gain possession. The wider variance in baseball player skill within a team regresses team standings toward the mean, while a basketball MVP is able to carry their team and make up for their more average teammates.
 
